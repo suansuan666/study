@@ -1,6 +1,6 @@
 本地终端修改niginx文件：
 1. 登录远程：
-    ssh ip地址 （例如：ssh  root@127.0.0.0.1）
+    ssh 用户名@ip地址 （例如：ssh  root@127.0.0.0.1）
     输入密码
 2. cd /export/  （在每层寻找过程中，可以使用ls命令查看当前目录下的文件夹）
 3. cd servers
