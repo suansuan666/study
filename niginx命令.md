@@ -1,4 +1,4 @@
-本地终端修改niginx文件：
+<!-- 本地终端修改niginx文件： -->
 1. 登录远程：
     ssh 用户名@ip地址 （例如：ssh  root@127.0.0.0.1）
     输入密码
@@ -15,6 +15,7 @@
 12. 通过cd命令向上退回sbin目录 （sbin目录在niginx目录下）
 13. ./nginx -s reload(到sbin目录下执行命令重启nginx)
 
+<!-- 常用命令： -->
+新建文件夹: mkdir xx
 
 
-    
