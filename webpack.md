@@ -97,3 +97,22 @@ webpack5新特性：
     filename: 'js/chunk-[contenthash].js',
     clean: true,
   },
+
+
+<!-- webpack 加载 js/ts 的顺序： -->
+webpack会从 webpack.config.js 配置entry的入口js文件开始读起，从上到下按顺序执行。webpack读取js会先看有没有import 。
+如果有import，则按import的顺序依次读取导入的js。 如果没有import，则继续执行当前js代码。 执行完当前js代码，会回退到上个js继续执行，直到回退到入口文件index.js 如果已经import过的js，则不再重复导入
+
+eg：
+首先读取index.js，发现有import a.js
+进入a.js ，发现有import ，导入第一个文件 b.js
+进入b.js，发现有import，进入 c.js
+在c.js里没有import，则执行c.js里面的代码，此时打印 console.log('file: c.js')
+执行完c.js后，回退到上个js，即b.js
+执行b.js代码，此时打印 console.log('file: b.js')
+执行完b.js，回退到上个js，即a.js
+在a.js，导入第二个文件 d.js
+进入d.js，没有导入的js，则执行当前js代码，此时打印 console.log('file: d.js')
+执行完d.js，回退到a.js，继续执行a.js代码，此时打印 console.log('file: a.js')
+执行完a.js，回退到index.js，结束！
+
