@@ -49,3 +49,62 @@
   alert(a); //a为1，这里并不在function scope内，a的值为全局变量的值 
 
 <!-- 当全局变量跟局部变量重名时，局部变量的scope会覆盖掉全局变量的scope，当离开局部变量的scope后，又重回到全局变量的scope，而 当全局变量遇上局部变量时，怎样使用全局变量呢？用window.globalVariableName。 -->
+
+
+
+<!-- 如何遍历对象的属性 -->
+遍历自身可枚举的属性（可枚举、非继承）：Object.keys()
+遍历自身的所有属性（可枚举、不可枚举、非继承）：Object.getOwnPropertyNames()方法
+遍历可枚举的自身属性和继承属性：for in
+
+<!-- 如何判断两个对象是否相等 -->
+1⃣️ Object.is(obj1,obj2): 判断两个对象引用地址是否一致，true 表示一致，false表示不一致
+2⃣️ 判断两个对象内容是否一致，思路：遍历对象的所有键名和键值是否都一致
+function isEqual(obj1,obj2) {
+  // 是否指向同一内存
+  if(obj1 === obj2) return true; 
+
+  let obj1Props = Object.getOwnPropertyNames(obj1);
+  let obj2Props = Object.getOwnPropertyNames(obj2);
+
+  // 判断两个对象的键名长度是否一致
+  if(obj1Props.length !== obj2Props.length) return false;
+
+  // 遍历键值
+  for(let prop in obj1) {
+    if(obj2.hasOwnProperty(prop)) {
+      //判断键值是否为对象，是对象则需要递归，不是对象则直接判断键值是否相等，不相等直接返回false
+      if(typeof obj1[prop] === 'object) {
+        if(!isEqual(obj1[prop],obj2[prop])){
+          return false
+        } else if(obj1[prop] !== obj2[prop]) {
+          return false
+        }
+      }
+    } else {
+      return false
+    }
+  }
+  return true
+} 
+
+<!-- 类数组转数组的方法 -->
+1. Array.prototype.slice.call(arrayLike)
+2. Array.prototype.splice.call(arrayLike, 0);
+3. Array.prototype.concat.apply([], arrayLike);
+4. Array.from(arrayLike);
+
+<!-- new.target -->
+new.target属性允许你检测函数或构造方法是否是通过new运算符被调用的。
+在通过new运算符被初始化的函数或构造方法中，new.target返回一个指向构造方法或函数的引用。在普通的函数调用中，new.target 的值是undefined。
+
+<!-- js的变量提升是什么？ -->
+函数在运行的时候，会首先创建上下文，然后将执行上下文入栈，当此执行上下文处于栈顶时，开始运行执行上下文。
+在创建执行上下文的过程中会做三件事：
+1⃣️ 创建变量对象 2⃣️ 创建作用域链 3⃣️ 确定this指向
+创建变量的过程中，首先会为arguments 创建一个属性，值为arguments，然后会扫描function 函数声明，创建一个同名属性，值为函数的引用，接着会扫描var 变量声明，创建一个同名属性，值为 undefined。这就是变量提升。
+
+<!-- 虽然typeof null == object 但是null不是对象！ -->
+
+<!-- web worker -->
+webworker 是html5里给js创造多线程运行环境的。它允许主线程创建worker线程，分配任务给后者，主线程运行的同时worker线程也在运行。

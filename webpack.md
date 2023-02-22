@@ -116,3 +116,4 @@ eg：
 执行完d.js，回退到a.js，继续执行a.js代码，此时打印 console.log('file: a.js')
 执行完a.js，回退到index.js，结束！
 
+webpack本质是一个函数，他接受一个配置信息作为参数，执行后返回一个compiler对象，调用compiler对象中得run方法就会启动编译。run方法接受一个回调，可以用来查看编译过程中得错误信息或编译信息。
