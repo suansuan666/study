@@ -50,8 +50,6 @@
 
 <!-- 当全局变量跟局部变量重名时，局部变量的scope会覆盖掉全局变量的scope，当离开局部变量的scope后，又重回到全局变量的scope，而 当全局变量遇上局部变量时，怎样使用全局变量呢？用window.globalVariableName。 -->
 
-
-
 <!-- 如何遍历对象的属性 -->
 遍历自身可枚举的属性（可枚举、非继承）：Object.keys()
 遍历自身的所有属性（可枚举、不可枚举、非继承）：Object.getOwnPropertyNames()方法
@@ -108,3 +106,43 @@ new.target属性允许你检测函数或构造方法是否是通过new运算符�
 
 <!-- web worker -->
 webworker 是html5里给js创造多线程运行环境的。它允许主线程创建worker线程，分配任务给后者，主线程运行的同时worker线程也在运行。
+
+<!-- 关于arguments -->
+每个函数都会有一个Arguments对象实例arguments，它引用着函数的实参。
+1. 作用：
+  1）js没有重载函数的功能，arguments对象能够模拟重载（方法重载；指在一个类中定义多个同名的方法，但要求每个方法具有不同的参数的类型或参数的个数。）
+  2）匿名函数的递归调用
+  3）不定参问题
+2. arguments 是一个类数组（类数组：拥有数组特性但没有数组方法）
+3. arguments大多用来针对同个方法多处调用并且传递参数个数不一样的时候使用。可以根据arguments的索引来判断执行方法
+4. arguments.length为函数实参个数，arguments.callee引用函数自身。fn.length 代表函数形参的个数
+5. 箭头函数中没有arguments对象（因为沿着作用域向上找的时候，浏览器在全局是没有arguments的），若想在箭头函数拿到传递的所有参数，可以配合..args剩余参数（展开运算符）使用
+
+<!-- ...args剩余参数和 arguments对象的区别 -->
+剩余参数只包含那些没有对应形参的实参，而 arguments 对象包含了传给函数的所有实参。
+
+<!-- 关于展开运算符（...) -->
+使用场景：
+1. 函数进行多个参数调用时：
+  function test(a,b,c) { }
+  var args = [0,1,2];
+  test(...args);
+2. 数组字面量中使用
+  var arr1=['a','b','c'];
+  var arr2=[...arr1,'d','e']; //['a','b','c','d','e']
+  // 可以用在push函数中
+  var arr1=['a','b','c'];
+  var arr2=['d','e'];
+  arr1.push(...arr2); //['a','b','c','d','e']
+3. 用于解构赋值
+  let [arg1,arg2,...arg3] = [1, 2, 3, 4];
+  arg1 //1
+  arg2 //2
+  arg3 //['3','4']
+4. 类数组对象变成数组
+  let a=new Set([1,2,3,4,5,2,1])  // a : Set(5) {1, 2, 3, 4, 5}
+  let b=[...a]    //  (5) [1, 2, 3, 4, 5] 
+
+<!-- !function -->
+“!”的作用是将function(){}函数体转为一个函数表达式。!function(){}()写法和(function(){})()是相同的
+

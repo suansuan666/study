@@ -11,3 +11,16 @@
 vue2中，v-for优先级更高
 vue3中，v-if优先级更高
 解决办法：可以使用computed属性或再包一层元素使用v-if控制
+
+
+<!-- new vue 后的流程 -->
+1. initProxy: 作用域代理，拦截组件内访问其它组件的数据。
+2. initLifecycle: 建立父子组件关系，在当前组件实例上添加一些属性和生命周期标识。如[Math Processing Error]parent,parent,refs,$children,_isMounted等。
+3. initEvents: 对父组件传入的事件添加监听，事件是谁创建谁监听，子组件创建事件子组件监听
+4. initRender: 声明[Math Processing Error]slots和slots和createElement()等。
+5. initInjections: 注入数据，初始化inject，一般用于组件更深层次之间的通信
+6. initState: 数据响应式：初始化状态。很多选项初始化的汇总：data,methods,props,computed和watch。
+7. initProvide: 提供数据注入。
+
+ps:需注意先注入再提供是因为祖辈数据要和当前data进行判重，相结合，且注入的数据在当前组件中转以后再提供给后代
+
